@@ -95,15 +95,11 @@ function createNote(noteId, noteTitle, noteContent){
                 </button>
             </div>
             <div class="card-body" onclick="editNote(${noteId})">
-                <div class="card-content">
-                    <p>${noteContent}</p>
-                </div>
-                <div class="card-footer">
-                    <p> hello </p>
-                    <!--will add time in later-->
-                </div>
+                <p>${noteContent}</p>
             </div>
-            
+            <div class="card-footer">
+                <time datetime="2026-01-12T14:30:00Z">Modified 2 hours ago</time>
+            </div>
         </div>
     `
     notesDisplayGrid.insertAdjacentHTML('beforeend', cardHTML)
