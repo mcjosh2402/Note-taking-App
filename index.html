@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My note-taking app</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <h1>Note-taking Platform</h1>
+    <div class="wrapper">
+        <button id="new-btn">NEW NOTE</button>
+
+        <div class="notes-display">
+
+        </div>
+
+        <div class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="note-title">
+                    <input id="title" type="text" placeholder="Title">
+                    <button class="cancel-btn">CANCEL</button>
+                    <button class="save-btn">SAVE</button>
+                </div>
+                <textarea id="text-area" placeholder="Start your note!" spellcheck="false"></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
