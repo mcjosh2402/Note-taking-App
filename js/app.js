@@ -17,7 +17,6 @@ function modalOff() {
     modalOverlay.classList.add("hidden")
 }
 
-
 newNoteBtn.addEventListener("click", () => {
     modalOn()
     document.getElementById("title").focus()
@@ -38,24 +37,27 @@ saveBtn.addEventListener("click", (e) => {
 function updateNotes() {
     notesDisplayGrid.innerHTML = ""
     notes.forEach((note) => {
-        createNote(note.id, note.title, note.content)
+        createNote(note.id, note.title, note.content, note.modifyTime)
     })
 }
 
-function addNote(noteId) { 
+function addNote(noteId) { // save-edit mode if noteId are passed in
     const titleText = document.getElementById("title").value.trim()
     const noteContent = document.getElementById("text-area").value.trim()
+    const now = Date.now()
+
     if(noteId){
         const noteEditing = notes.find(note => note.id === String(noteId))
         noteEditing.title = titleText
         noteEditing.content = noteContent
-        console.log(noteEditing)
+        noteEditing.modifyTime = now
     }
     else{
         const noteObject = {
             id: generateId(),
             title: titleText,
-            content: noteContent
+            content: noteContent,
+            modifyTime: now
         }
         notes.unshift(noteObject)
         document.getElementById("title").value = ""
@@ -85,7 +87,7 @@ function editNote(noteId){
     document.getElementById("title").focus()
 }
 
-function createNote(noteId, noteTitle, noteContent){
+function createNote(noteId, noteTitle, noteContent, modifyTime){
     const cardHTML = `
         <div class="card">
             <div class="card-top">
@@ -98,11 +100,25 @@ function createNote(noteId, noteTitle, noteContent){
                 <p>${noteContent}</p>
             </div>
             <div class="card-footer">
-                <time datetime="2026-01-12T14:30:00Z">Modified 2 hours ago</time>
+                <time>${getTime(modifyTime)}</time>
             </div>
         </div>
     `
     notesDisplayGrid.insertAdjacentHTML('beforeend', cardHTML)
+}
+
+function getTime(time){
+    const now = Date.now()
+    const secDiff = Math.floor((now - time) / 1000)
+    const minDiff = Math.floor(secDiff / 60)
+    const hourDiff = Math.floor(minDiff / 60)
+    const dayDiff = Math.floor(hourDiff / 24)
+
+
+    if(secDiff < 60) return "edited just now"
+    if(minDiff < 60) return `edited ${minDiff} minutes ago`
+    if(hourDiff < 24) return `edited ${hourDiff} hours ago`
+    if(dayDiff < 30) return `edited ${dayDiff} days ago`
 }
 
 function saveNotes() {
