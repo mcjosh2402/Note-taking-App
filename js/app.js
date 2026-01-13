@@ -4,6 +4,18 @@ const saveBtn = document.querySelector(".save-btn")
 const modalOverlay = document.querySelector(".modal-overlay")
 const notesDisplayGrid = document.querySelector(".notes-display")
 const deleteBtn = document.querySelector(".delete-btn")
+const colors = {
+    green: '#3F4F45',
+    blue: '#2F3A44',
+    black: '#2E2B26',
+    default: '#f1e9db'
+}
+
+document.querySelector(".color-tags").addEventListener("click", (event) => {
+    if(event.target.matches("#color-green")){
+        event.target.style.backgroundColor = colors.green
+    }
+})
 
 let notes = getNotes()
 let editingId = null
@@ -33,6 +45,7 @@ saveBtn.addEventListener("click", (e) => {
     addNote(editingId)
     editingId = null
 })
+
 
 function updateNotes() {
     notesDisplayGrid.innerHTML = ""
