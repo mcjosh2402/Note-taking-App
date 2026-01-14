@@ -11,13 +11,8 @@ const colors = {
     default: '#f1e9db'
 }
 
-document.querySelector(".color-tags").addEventListener("click", (event) => {
-    if(event.target.matches("#color-green")){
-        event.target.style.backgroundColor = colors.green
-    }
-})
-
 let notes = getNotes()
+let selectedColor = "default"
 let editingId = null
 updateNotes()
 
@@ -30,6 +25,9 @@ function modalOff() {
 }
 
 newNoteBtn.addEventListener("click", () => {
+    document.getElementById("title").value = ""
+    document.getElementById("text-area").value = ""
+    selectedColor = "default"
     modalOn()
     document.getElementById("title").focus()
 })
@@ -37,6 +35,7 @@ newNoteBtn.addEventListener("click", () => {
 cancelBtn.addEventListener("click", () => {
     document.getElementById("title").value = ""
     document.getElementById("text-area").value = ""
+    selectedColor = "default"
     modalOff()
 })
 
@@ -46,35 +45,39 @@ saveBtn.addEventListener("click", (e) => {
     editingId = null
 })
 
+// change note color
+document.querySelector(".color-tags").addEventListener("click", (event) => {
+    selectedColor = event.target.id
+    document.querySelector(".modal-content").id = event.target.id
+})
 
 function updateNotes() {
     notesDisplayGrid.innerHTML = ""
     notes.forEach((note) => {
-        createNote(note.id, note.title, note.content, note.modifyTime)
+        createNote(note.id, note.title, note.content, note.modifyTime, note.color)
     })
 }
 
 function addNote(noteId) { // save-edit mode if noteId are passed in
     const titleText = document.getElementById("title").value.trim()
     const noteContent = document.getElementById("text-area").value.trim()
-    const now = Date.now()
 
     if(noteId){
         const noteEditing = notes.find(note => note.id === String(noteId))
         noteEditing.title = titleText
         noteEditing.content = noteContent
-        noteEditing.modifyTime = now
+        noteEditing.modifyTime = Date.now()
+        noteEditing.color = selectedColor
     }
     else{
         const noteObject = {
             id: generateId(),
             title: titleText,
             content: noteContent,
-            modifyTime: now
+            modifyTime: Date.now(),
+            color: selectedColor
         }
         notes.unshift(noteObject)
-        document.getElementById("title").value = ""
-        document.getElementById("text-area").value = ""
     }
     saveNotes()
     updateNotes() 
@@ -94,15 +97,16 @@ function deleteNote(noteId) {
 function editNote(noteId){
     editingId = noteId
     const noteEditing = notes.find(note => note.id === String(noteId))
+    selectedColor = noteEditing.color || "default"
     modalOn()
     document.getElementById("title").value = noteEditing.title
     document.getElementById("text-area").value = noteEditing.content
     document.getElementById("title").focus()
 }
 
-function createNote(noteId, noteTitle, noteContent, modifyTime){
+function createNote(noteId, noteTitle, noteContent, modifyTime, noteColor){
     const cardHTML = `
-        <div class="card">
+        <div class="card" id="${noteColor}">
             <div class="card-top">
                 <h2>${noteTitle}</h2>
                 <button class="delete-btn" onclick="deleteNote(${noteId})">

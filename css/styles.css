@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
-  --background: #f1e9db;
-  --surface: #a39b8b;
-  --text-primary: #07020d;
-  --text-secondary: #716a5c;
-  --border: #716a5c;
-  --accent-primary: #5db7d3;
+    --background: #f1e9db;
+    --surface: #a39b8b;
+    --text-primary: #07020d;
+    --text-secondary: #716a5c;
+    --border: #716a5c;
+    --accent-primary: #5db7d3;
 
-  --color-green: #3F4F45;
-  --color-blue:  #2F3A44;
-  --color-black: #2E2B26;
+    --color-green: #3F4F45;
+    --color-blue:  #2F3A44;
+    --color-black: #2E2B26;
 }
 
 * {
@@ -110,19 +110,19 @@ h1 {
     transform: scale(1.1);
 }
 
-.modal-content .modal-footer .color-tags #color-default {
+#default {
     background-color: var(--background);
 }
 
-.modal-content .modal-footer .color-tags #color-green {
+#green {
     background-color: var(--color-green);
 }
 
-.modal-content .modal-footer .color-tags #color-blue {
+#blue {
     background-color: var(--color-blue);
 }
 
-.modal-content .modal-footer .color-tags #color-black {
+#black {
     background-color: var(--color-black);
 }
 
@@ -138,9 +138,10 @@ h1 {
     font-size: 28px;
     font-weight: bold;
     border: none;
-    background: none;
+    background: var(--background);
+    border-radius: 5px;
     color: var(--text-primary);
-    padding-bottom: 5px;
+    padding: 5px 5px 0 5px;
     border-bottom: 2px solid transparent;
 }
 
@@ -160,7 +161,7 @@ h1 {
     background-color: var(--background);
     border: 1px solid var(--surface);
     color: var(--text-primary);
-    border-radius: 4px;
+    border-radius: 5px;
     overflow: auto;
 }
 
