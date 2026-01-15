@@ -28,7 +28,7 @@ function modalOff() {
 newNoteBtn.addEventListener("click", () => {
     editingId = null
     document.getElementById("title").value = ""
-    document.getElementById("text-area").value = ""
+    document.getElementById("text-area").innerHTML = ""
     document.querySelector(".modal-content").id = "default"
     modalOn()
     document.getElementById("title").focus()
@@ -36,7 +36,7 @@ newNoteBtn.addEventListener("click", () => {
 
 cancelBtn.addEventListener("click", () => {
     document.getElementById("title").value = ""
-    document.getElementById("text-area").value = ""
+    document.getElementById("text-area").innerHTML = ""
     selectedColor = "default"
     editingId = null
     modalOff()
@@ -63,7 +63,7 @@ function updateNotes() {
 
 function addNote(noteId) { // save-edit mode if noteId are passed in
     const titleText = document.getElementById("title").value.trim()
-    const noteContent = document.getElementById("text-area").value.trim()
+    const noteContent = document.getElementById("text-area").innerHTML.trim()
 
     if(noteId){
         const noteEditing = notes.find(note => note.id === String(noteId))
@@ -104,7 +104,7 @@ function editNote(noteId){
     document.querySelector(".modal-content").id = selectedColor  
     modalOn()
     document.getElementById("title").value = noteEditing.title
-    document.getElementById("text-area").value = noteEditing.content
+    document.getElementById("text-area").innerHTML = noteEditing.content
     document.getElementById("title").focus()
 }
 
@@ -118,7 +118,7 @@ function createNote(noteId, noteTitle, noteContent, modifyTime, noteColor){
                 </button>
             </div>
             <div class="card-body" onclick="editNote(${noteId})">
-                <p>${noteContent}</p>
+                <div class="card-content">${noteContent}</div>
             </div>
             <div class="card-footer">
                 <time>${getTime(modifyTime)}</time>
