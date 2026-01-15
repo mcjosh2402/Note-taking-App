@@ -5,9 +5,10 @@ const modalOverlay = document.querySelector(".modal-overlay")
 const notesDisplayGrid = document.querySelector(".notes-display")
 const deleteBtn = document.querySelector(".delete-btn")
 const colors = {
-    green: '#3F4F45',
-    blue: '#2F3A44',
-    black: '#2E2B26',
+    green: '#ABE7B2',
+    blue: '#8CE4FF',
+    black: '#D3DAD9',
+    pink: '#FFAAB8',
     default: '#f1e9db'
 }
 
@@ -25,9 +26,10 @@ function modalOff() {
 }
 
 newNoteBtn.addEventListener("click", () => {
+    editingId = null
     document.getElementById("title").value = ""
     document.getElementById("text-area").value = ""
-    selectedColor = "default"
+    document.querySelector(".modal-content").id = "default"
     modalOn()
     document.getElementById("title").focus()
 })
@@ -36,6 +38,7 @@ cancelBtn.addEventListener("click", () => {
     document.getElementById("title").value = ""
     document.getElementById("text-area").value = ""
     selectedColor = "default"
+    editingId = null
     modalOff()
 })
 
@@ -98,6 +101,7 @@ function editNote(noteId){
     editingId = noteId
     const noteEditing = notes.find(note => note.id === String(noteId))
     selectedColor = noteEditing.color || "default"
+    document.querySelector(".modal-content").id = selectedColor  
     modalOn()
     document.getElementById("title").value = noteEditing.title
     document.getElementById("text-area").value = noteEditing.content

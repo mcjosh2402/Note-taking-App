@@ -8,9 +8,10 @@
     --border: #716a5c;
     --accent-primary: #5db7d3;
 
-    --color-green: #3F4F45;
-    --color-blue:  #2F3A44;
-    --color-black: #2E2B26;
+    --color-green: #ABE7B2;
+    --color-blue:  #8CE4FF;
+    --color-black: #D3DAD9;
+    --color-pink: #FFAAB8;
 }
 
 * {
@@ -124,6 +125,10 @@ h1 {
 
 #black {
     background-color: var(--color-black);
+}
+
+#pink {
+    background-color: var(--color-pink);
 }
 
 .note-title {
