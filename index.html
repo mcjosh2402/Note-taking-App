@@ -25,7 +25,13 @@
                 </div>
                 <div id="text-area" contenteditable="true" data-placeholder="Start your note..." spellcheck="false"></div>
                 <div class="modal-footer">
-                    <p>tags:</p>
+                    <button class="image-btn" id="image-upload-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="http://www.w3.org/2000/svg" width="20px" fill="currentColor">
+                            <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z"/>
+                        </svg>
+                        Add Image
+                    </button>
+                    <input type="file" id="image-file-input" accept="image/*" multiple style="display: none;">
                     <div class="color-tags">
                         <button class="color" id="default"></button>
                         <button class="color" id="green"></button>

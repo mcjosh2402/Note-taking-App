@@ -3,7 +3,10 @@ const cancelBtn = document.querySelector(".cancel-btn")
 const saveBtn = document.querySelector(".save-btn")
 const modalOverlay = document.querySelector(".modal-overlay")
 const notesDisplayGrid = document.querySelector(".notes-display")
-const deleteBtn = document.querySelector(".delete-btn")
+const textArea = document.getElementById("text-area")
+const imageUploadBtn = document.getElementById("image-upload-btn")
+const imageFileInput = document.getElementById("image-file-input")
+
 const colors = {
     green: '#ABE7B2',
     blue: '#8CE4FF',
@@ -52,6 +55,74 @@ saveBtn.addEventListener("click", (e) => {
 document.querySelector(".color-tags").addEventListener("click", (event) => {
     selectedColor = event.target.id
     document.querySelector(".modal-content").id = event.target.id
+})
+
+// Handle image upload button click
+imageUploadBtn.addEventListener("click", () => {
+    imageFileInput.click()
+})
+
+// Handle image file input change
+imageFileInput.addEventListener("change", (e) => {
+    const files = e.target.files
+    
+    for (let i = 0; i < files.length; i++) {
+        if (files[i].type.indexOf('image') !== -1) {
+            const reader = new FileReader()
+            
+            reader.onload = (event) => {
+                const img = document.createElement('img')
+                img.src = event.target.result
+                img.style.maxWidth = '100%'
+                img.style.height = 'auto'
+                img.style.borderRadius = '8px'
+                img.style.margin = '8px 0'
+                
+                textArea.appendChild(img)
+                textArea.appendChild(document.createElement('br'))
+            }
+            reader.readAsDataURL(files[i])
+        }
+    }
+    imageFileInput.value = ''
+})
+
+// Handle image paste
+textArea.addEventListener('paste', (e) => {
+    e.preventDefault()
+    
+    const items = e.clipboardData.items
+    let hasImage = false
+    
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+            hasImage = true
+            const blob = items[i].getAsFile()
+            const reader = new FileReader()
+            
+            reader.onload = (event) => {
+                const img = document.createElement('img')
+                img.src = event.target.result
+                img.style.maxWidth = '100%'
+                img.style.height = 'auto'
+                img.style.borderRadius = '8px'
+                img.style.margin = '8px 0'
+                
+                const selection = window.getSelection()
+                if (selection.rangeCount > 0) {
+                    const range = selection.getRangeAt(0)
+                    range.deleteContents()
+                    range.insertNode(img)
+                    
+                    range.setStartAfter(img)
+                    range.collapse(true)
+                    selection.removeAllRanges()
+                    selection.addRange(range)
+                }
+            }
+            reader.readAsDataURL(blob)
+        }
+    }
 })
 
 function updateNotes() {
@@ -151,3 +222,4 @@ function getNotes() {
     const notes = localStorage.getItem("note") || "[]"
     return JSON.parse(notes)
 }
+
